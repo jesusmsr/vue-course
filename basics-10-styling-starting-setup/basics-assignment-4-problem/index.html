@@ -24,9 +24,9 @@
     <!-- 1) Fetch the user input and use it as a CSS class -->
     <!-- The entered class should be added to the below paragraph -->
     <input type="text"
-      @input="inputClass($event)" />
+      v-model="userInput" />
     <!-- (available classes: "user1", "user2") -->
-    <p :class="[firstParagraphClass, visibleClass]">
+    <p :class="paraClasses">
       Style me!
     </p>
     <button @click="toggleVisible()">Toggle Paragraph</button>
@@ -35,8 +35,8 @@
 
     <!-- 3) Add dynamic inline styling to the below paragraph and let the user enter a background-color -->
     <input type="text"
-      @input="inputInlineStyle($event)" />
-    <p :style="{backgroundColor : backgroundColor}">Style me inline!</p>
+      v-model="inputBackgroundColor" />
+    <p :style="{backgroundColor : inputBackgroundColor}">Style me inline!</p>
   </section>
 </body>
 

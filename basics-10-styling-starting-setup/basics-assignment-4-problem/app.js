@@ -3,29 +3,25 @@ const app = Vue.createApp({
         return {
             userInput: '',
             visible: true,
-            backgroundColor: '',
+            inputBackgroundColor: '',
         }
     },
     computed: {
-        firstParagraphClass() {
-            return this.userInput;
+        paraClasses() {
+            return {
+                user1: this.userInput === 'user1',
+                user2: this.userInput === 'user2',
+                visible: this.visible,
+                hidden: !this.visible,
+            }
         },
         visibleClass() {
             return this.visible ? 'visible' : 'hidden';
-        },
-        backgroundColor() {
-            return 'background-color: ' + this.backgroundColor;
         }
     },
     methods: {
-        inputClass(event) {
-            this.userInput = event.target.value;
-        },
         toggleVisible() {
             this.visible = !this.visible;
-        },
-        inputInlineStyle(event) {
-            this.backgroundColor = event.target.value;
         }
     }
 });
