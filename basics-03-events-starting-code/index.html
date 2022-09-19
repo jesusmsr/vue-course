@@ -24,7 +24,8 @@
     <h2>Events in Action</h2>
     <button v-on:click="add(5)">Add 5</button>
     <button v-on:click.right="reduce(5)">Remove 5</button>
-    <p>Result: {{ counter }}</p>
+    <p v-once>Starting value: {{ counter }}</p>
+    <p>Counter: {{ counter }}</p>
     <input type="text"
       v-on:input="setName($event)"
       v-on:keyup.enter="confirmInput()">
