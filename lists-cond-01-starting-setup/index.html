@@ -28,7 +28,12 @@
     <p v-if="goals.length === 0">No goals have been added yet - please start adding some!</p>
     <ul v-else>
       <li v-for="(goal, index) in goals"
-        @click="removeElement(index)">{{ goal }}</li>
+        :key="goal"
+        @click="removeElement(index)">{{ goal }}
+        <input type="text"
+          @click.stop>
+      </li>
+
     </ul>
   </section>
 </body>
