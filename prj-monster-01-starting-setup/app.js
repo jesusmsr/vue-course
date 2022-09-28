@@ -6,6 +6,18 @@ const app = Vue.createApp({
             combatLog: [],
         }
     },
+    computed: {
+        monsterBarStyles() {
+            return {
+                width: this.monsterHp + '%'
+            }
+        },
+        playerBarStyles() {
+            return {
+                width: this.playerHp + '%'
+            }
+        }
+    },
     methods: {
         attackMonster() {
             const attackValue = Math.floor(Math.random() * (12 - 6)) + 5;
