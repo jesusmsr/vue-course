@@ -83,7 +83,12 @@ const app = Vue.createApp({
                 this.playerHp += healValue;
             }
             this.attackPlayer();
-
+        },
+        startGame() {
+            this.playerHp = 100;
+            this.monsterHp = 100;
+            this.winner = null;
+            this.currentRound = 0;
         }
     }
 });
