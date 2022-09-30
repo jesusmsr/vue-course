@@ -57,7 +57,11 @@
       class="container">
       <h2>Battle Log</h2>
       <ul>
-        <li v-for="entry of combatLog">{{ entry }}</li>
+        <li v-for="entry of combatLog">
+          <span :class="{'log--player': entry.actionBy === 'player', 'log--monster': entry.actionBy === 'monster'}">{{ entry.actionBy === 'player' ? 'Player' : 'Monster'}} </span>
+          <span v-if="entry.actionType === 'heal'"> heals himself for <span class="log--heal">{{ entry.actionValue }}</span></span>
+          <span v-else> attacks and deals <span class="log--damage">{{ entry.actionValue }}</span></span>
+        </li>
       </ul>
     </section>
   </div>
