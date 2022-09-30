@@ -1,48 +1,89 @@
+function getRandomValue(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
 const app = Vue.createApp({
     data() {
         return {
             monsterHp: 100,
             playerHp: 100,
             combatLog: [],
-            specialAttackCounter: 0,
+            currentRound: 0,
+            winner: null
         }
     },
     computed: {
         monsterBarStyles() {
-            return {
-                width: this.monsterHp + '%'
+            if (this.monsterHp <= 0) {
+                return {
+                    width: '0%'
+                }
+            } else {
+                return {
+                    width: this.monsterHp + '%'
+                }
             }
+
         },
         playerBarStyles() {
-            return {
-                width: this.playerHp + '%'
+            if (this.playerHp <= 0) {
+                return {
+                    width: '0%'
+                }
+            } else {
+                return {
+                    width: this.playerHp + '%'
+                }
             }
+
         },
         specialAttackAvailable() {
-            if (this.specialAttackCounter > 0) {
-                return true;
-            } else if (this.specialAttackCounter == 0) {
-                return false;
+            return this.currentRound % 3 !== 0;
+        }
+    },
+    watch: {
+        playerHp(value) {
+            if (value <= 0 && this.monsterHp <= 0) {
+                this.winner = 'draw';
+            } else if (value <= 0) {
+                this.winner = 'monster';
+            }
+        },
+        monsterHp(value) {
+            if (value <= 0 && this.playerHp <= 0) {
+                this.winner = 'draw';
+            } else if (value < 0) {
+                this.winner = 'player';
             }
         }
     },
     methods: {
         attackMonster() {
-            this.specialAttackCounter -= 1;
-            const attackValue = Math.floor(Math.random() * (12 - 6)) + 5;
+            this.currentRound++;
+            const attackValue = getRandomValue(6, 12);
             this.monsterHp -= attackValue;
-            this.combatLog.push('Atacao');
             this.attackPlayer();
         },
         attackPlayer() {
-            const attackValue = Math.floor(Math.random() * (15 - 8)) + 5;
+            this.currentRound++;
+            const attackValue = getRandomValue(8, 15);
             this.playerHp -= attackValue
         },
         specialAttackMonster() {
-            this.specialAttackCounter = 3;
-            const attackValue = Math.floor(Math.random() * (30 - 12)) + 5;
+            this.currentRound++;
+            const attackValue = getRandomValue(12, 30);
             this.monsterHp -= attackValue;
             this.attackPlayer();
+        },
+        healPlayer() {
+            const healValue = getRandomValue(8, 20);
+            if (this.playerHp + healValue > 100) {
+                this.playerHp = 100;
+            } else {
+                this.playerHp += healValue;
+            }
+            this.attackPlayer();
+
         }
     }
 });
